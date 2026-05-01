@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birgül Göktürk - Software Engineer</title>
+    
+    <!-- Tailwind CSS (CDN üzerinden) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Outfit -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome (İkonlar için) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS Yapılandırması -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bgdark: '#050811', /* Gece mavisi/siyah arka plan */
+                        neon: '#0ea5e9',   /* Neon mavi */
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'], /* Outfit tipografisi */
+                    },
+                    animation: {
+                        'float': 'float 3s ease-in-out infinite', /* Süzülme animasyonu */
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Özel CSS Tanımlamaları -->
+    <style>
+        /* Akıcı sayfa kaydırma efekti (Smooth Scroll) */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            background-color: #050811;
+            color: #ffffff;
+            overflow-x: hidden;
+            font-family: 'Outfit', sans-serif;
+        }
+        
+        /* Kartlar ve butonlar için neon parlama efekti (Neon Glow) */
+        .neon-glow {
+            box-shadow: 0 0 10px rgba(14, 165, 233, 0.4), 0 0 20px rgba(14, 165, 233, 0.2);
+            border: 1px solid rgba(14, 165, 233, 0.3);
+            transition: all 0.3s ease;
+        }
+        .neon-glow:hover {
+            box-shadow: 0 0 20px rgba(14, 165, 233, 0.8), 0 0 40px rgba(14, 165, 233, 0.6);
+            border-color: rgba(14, 165, 233, 0.8);
+            transform: translateY(-5px); /* Hover durumunda süzülme hissiyatını artırır */
+        }
+        
+        /* Antigravity Modu için fixed (sabit) sınıf */
+        .ag-element {
+            position: fixed !important;
+            z-index: 9999;
+            pointer-events: none; /* Elementler imleç etkinliklerini engellemesin */
+            margin: 0 !important;
+            box-sizing: border-box;
+            will-change: transform, left, top;
+        }
+        
+        /* Yükleme animasyonu (Spinner) */
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-left-color: #0ea5e9;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Scrollbar stillendirme */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050811;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #0ea5e9;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-neon selection:text-bgdark">
+
+    <!-- Navbar (Üst Menü) -->
+    <nav class="fixed w-full z-50 bg-bgdark/80 backdrop-blur-md border-b border-white/10 transition-all duration-300">
+        <div class="container mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center">
+            <!-- Sol: Logo ve İsim -->
+            <div class="flex items-center space-x-3 mb-4 md:mb-0 ag-target">
+                <i class="fa-solid fa-laptop-code text-neon text-3xl animate-pulse"></i>
+                <span class="text-2xl font-bold tracking-wider hover:text-neon transition-colors cursor-pointer" onclick="window.scrollTo(0,0)">
+                    Birgül Göktürk
+                </span>
+            </div>
+            
+            <!-- Sağ: Menü Linkleri ve Antigravity Butonu -->
+            <div class="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-8">
+                <a href="#hero" class="hover:text-neon transition-colors font-medium">Ana Sayfa</a>
+                <a href="#projects" class="hover:text-neon transition-colors font-medium">Projeler</a>
+                <a href="#skills" class="hover:text-neon transition-colors font-medium">Yetenekler</a>
+                <a href="#contact" class="hover:text-neon transition-colors font-medium">İletişim</a>
+                
+                <!-- Antigravity Butonu -->
+                <button id="ag-btn" onclick="toggleAntigravity()" class="bg-neon text-bgdark px-5 py-2 rounded-full font-bold hover:bg-white transition-all duration-300 neon-glow ag-target">
+                    Antigravity Modu <i class="fa-solid fa-rocket ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero (Karşılama) Bölümü -->
+    <section id="hero" class="min-h-screen flex items-center justify-center pt-24 relative overflow-hidden">
+        <!-- Arka plan parlamaları -->
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-neon/20 rounded-full mix-blend-screen filter blur-[100px] animate-pulse pointer-events-none"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full mix-blend-screen filter blur-[100px] animate-pulse pointer-events-none" style="animation-delay: 1.5s;"></div>
+        
+        <div class="container mx-auto px-6 text-center z-10">
+            <!-- Başlık -->
+            <h1 class="text-5xl md:text-7xl font-bold mb-4 ag-target">
+                Birgül Göktürk
+            </h1>
+            <h2 class="text-2xl md:text-4xl text-neon mb-8 font-light tracking-wide ag-target">
+                Software Engineer
+            </h2>
+            
+            <!-- Açıklama Vizyon Yazısı -->
+            <p class="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-12 leading-relaxed ag-target">
+                Yapay zeka ve makine öğrenimi sistemleriyle entegre yazılım çözümleri üretiyorum. Modern teknolojileri kullanarak yenilikçi, akıcı ve ölçeklenebilir projeler geliştirmek en büyük tutkum.
+            </p>
+            
+            <!-- Sosyal Medya ve İletişim İkonları -->
+            <div class="flex justify-center space-x-6 ag-target">
+                <a href="https://github.com/BirgulGokturk" target="_blank" class="w-14 h-14 rounded-full bg-white/5 flex items-center justify-center text-2xl hover:text-bgdark hover:bg-neon transition-all duration-300 hover:animate-float neon-glow">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/birg%C3%BCl-g%C3%B6kt%C3%BCrk-3a150b388" target="_blank" class="w-14 h-14 rounded-full bg-white/5 flex items-center justify-center text-2xl hover:text-bgdark hover:bg-neon transition-all duration-300 hover:animate-float neon-glow">
+                    <i class="fa-brands fa-linkedin-in"></i>
+                </a>
+                <a href="tel:0531318737" class="w-14 h-14 rounded-full bg-white/5 flex items-center justify-center text-2xl hover:text-bgdark hover:bg-neon transition-all duration-300 hover:animate-float neon-glow" title="0531 318 737">
+                    <i class="fa-solid fa-phone"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projeler Bölümü (GitHub API) -->
+    <section id="projects" class="py-24 bg-black/40 border-y border-white/5">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-5xl font-bold text-center mb-16 ag-target">Öne Çıkan <span class="text-neon">Projeler</span></h2>
+            
+            <!-- Yükleme Durumu (Spinner) -->
+            <div id="spinner" class="spinner mb-10"></div>
+            
+            <!-- Hata Mesajı Alanı -->
+            <div id="error-msg" class="text-red-500 text-center hidden text-lg mb-10 ag-target"></div>
+            
+            <!-- Projelerin Listeleneceği Container -->
+            <div id="projects-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- JavaScript ile GitHub API'den gelen veriler buraya eklenecek -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Yetenekler (Skills) Bölümü -->
+    <section id="skills" class="py-24">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-5xl font-bold text-center mb-16 ag-target">Teknik <span class="text-neon">Yetenekler</span></h2>
+            
+            <!-- 4'lü Grid Yapısı -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Yetenek 1 -->
+                <div class="bg-white/5 p-8 rounded-xl backdrop-blur-sm hover:animate-float transition-all duration-300 neon-glow text-center ag-target">
+                    <i class="fa-brands fa-java text-5xl text-neon mb-6"></i>
+                    <h3 class="text-2xl font-bold mb-3">Java</h3>
+                    <p class="text-gray-400">OOP & Back-end Geliştirme</p>
+                </div>
+                
+                <!-- Yetenek 2 -->
+                <div class="bg-white/5 p-8 rounded-xl backdrop-blur-sm hover:animate-float transition-all duration-300 neon-glow text-center ag-target">
+                    <i class="fa-brands fa-python text-5xl text-neon mb-6"></i>
+                    <h3 class="text-2xl font-bold mb-3">Python</h3>
+                    <p class="text-gray-400">AI / ML & Scripts</p>
+                </div>
+                
+                <!-- Yetenek 3 -->
+                <div class="bg-white/5 p-8 rounded-xl backdrop-blur-sm hover:animate-float transition-all duration-300 neon-glow text-center ag-target">
+                    <i class="fa-solid fa-cubes text-5xl text-neon mb-6"></i>
+                    <h3 class="text-2xl font-bold mb-3">OOP</h3>
+                    <p class="text-gray-400">Nesne Yönelimli Tasarım</p>
+                </div>
+                
+                <!-- Yetenek 4 -->
+                <div class="bg-white/5 p-8 rounded-xl backdrop-blur-sm hover:animate-float transition-all duration-300 neon-glow text-center ag-target">
+                    <i class="fa-solid fa-network-wired text-5xl text-neon mb-6"></i>
+                    <h3 class="text-2xl font-bold mb-3">Machine Learning</h3>
+                    <p class="text-gray-400">Veri Modelleri Sistemleri</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- İletişim ve Footer -->
+    <section id="contact" class="py-20 bg-black/60 border-t border-white/5 relative">
+        <div class="container mx-auto px-6 text-center ag-target">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">İletişime <span class="text-neon">Geç</span></h2>
+            <p class="text-gray-400 mb-10 max-w-xl mx-auto text-lg">
+                Yeni bir proje fikriniz mi var veya ekibinize değer katacak bir mühendis mi arıyorsunuz? Benimle iletişime geçin.
+            </p>
+            
+            <div class="flex flex-col items-center space-y-4 mb-12">
+                <a href="mailto:iletisim@birgulgokturk.com" class="text-xl hover:text-neon transition-colors flex items-center">
+                    <i class="fa-solid fa-envelope mr-3 text-neon"></i> iletisim@birgulgokturk.com
+                </a>
+                <a href="tel:0531318737" class="text-xl hover:text-neon transition-colors flex items-center">
+                    <i class="fa-solid fa-phone mr-3 text-neon"></i> 0531 318 737
+                </a>
+            </div>
+            
+            <div class="flex justify-center space-x-6 mb-12">
+                <a href="https://github.com/BirgulGokturk" target="_blank" class="text-3xl text-gray-400 hover:text-neon transition-colors hover:animate-float">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/birg%C3%BCl-g%C3%B6kt%C3%BCrk-3a150b388" target="_blank" class="text-3xl text-gray-400 hover:text-neon transition-colors hover:animate-float">
+                    <i class="fa-brands fa-linkedin-in"></i>
+                </a>
+            </div>
+            
+            <p class="text-gray-600 text-sm">
+                &copy; 2026 Birgül Göktürk. Tasarlandı ve Kodlandı.
+            </p>
+        </div>
+    </section>
+
+    <!-- JavaScript Kodları -->
+    <script>
+        // --- 1. GitHub API Entegrasyonu (Projeler) ---
+        async function fetchGitHubProjects() {
+            const container = document.getElementById('projects-container');
+            const spinner = document.getElementById('spinner');
+            const errorMsg = document.getElementById('error-msg');
+            
+            try {
+                // GitHub repos endpoint'ine istek atılıyor
+                const response = await fetch('https://api.github.com/users/BirgulGokturk/repos?sort=updated');
+                
+                // Hata kontrolü
+                if (!response.ok) {
+                    throw new Error('Veriler alınamadı (API Limitine takılmış olabilirsiniz).');
+                }
+                
+                const repos = await response.json();
+                spinner.style.display = 'none'; // Yükleme başarılı, spinner gizlenir
+                
+                // Repoları DOM'a ekleme
+                repos.forEach(repo => {
+                    const card = document.createElement('div');
+                    // Karta ag-target sınıfı ekliyoruz ki Antigravity modunda süzülsün
+                    card.className = 'bg-white/5 p-6 rounded-xl backdrop-blur-sm hover:animate-float transition-all duration-300 neon-glow ag-target flex flex-col justify-between h-full';
+                    
+                    const description = repo.description || 'Bu proje için henüz bir açıklama girilmemiş.';
+                    const language = repo.language || 'Belirtilmemiş';
+                    
+                    card.innerHTML = `
+                        <div>
+                            <div class="flex justify-between items-start mb-4">
+                                <h3 class="text-xl font-bold text-neon line-clamp-1" title="${repo.name}">${repo.name}</h3>
+                                <i class="fa-brands fa-github text-gray-400 text-xl"></i>
+                            </div>
+                            <p class="text-gray-300 mb-6 text-sm h-16 overflow-hidden">${description}</p>
+                        </div>
+                        <div>
+                            <div class="flex items-center space-x-2 mb-4 text-xs font-mono bg-black/30 w-fit px-3 py-1 rounded-full text-gray-300 border border-white/10">
+                                <span class="w-2 h-2 rounded-full bg-neon"></span>
+                                <span>${language}</span>
+                            </div>
+                            <a href="${repo.html_url}" target="_blank" class="inline-block w-full text-center py-2 bg-transparent border border-neon text-neon rounded-lg hover:bg-neon hover:text-bgdark transition-all duration-300 font-bold">
+                                Projeyi İncele <i class="fa-solid fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+
+                // Eğer repo yoksa
+                if (repos.length === 0) {
+                    container.innerHTML = '<p class="text-gray-400 col-span-full text-center text-lg">Herkese açık proje bulunamadı.</p>';
+                }
+                
+            } catch (error) {
+                // Try/Catch hata yönetimi
+                console.error("API Hatası:", error);
+                spinner.style.display = 'none';
+                errorMsg.style.display = 'block';
+                errorMsg.innerText = `Hata: ${error.message}`;
+            }
+        }
+
+        // Sayfa yüklendiğinde projeleri çek
+        document.addEventListener('DOMContentLoaded', fetchGitHubProjects);
+
+
+        // --- 2. Antigravity (Yerçekimsiz) Modu ---
+        let isAntigravity = false;
+        let floatingElements = [];
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+        let animationId;
+
+        // Mouse imlecini takip et
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        // Butona tıklandığında tetiklenecek fonksiyon
+        function toggleAntigravity() {
+            isAntigravity = !isAntigravity;
+            const btn = document.getElementById('ag-btn');
+            
+            if (isAntigravity) {
+                btn.innerHTML = 'Normale Dön <i class="fa-solid fa-arrow-down ml-2"></i>';
+                btn.classList.replace('bg-neon', 'bg-red-500');
+                btn.classList.replace('text-bgdark', 'text-white');
+                startAntigravity();
+            } else {
+                btn.innerHTML = 'Antigravity Modu <i class="fa-solid fa-rocket ml-2"></i>';
+                btn.classList.replace('bg-red-500', 'bg-neon');
+                btn.classList.replace('text-white', 'text-bgdark');
+                stopAntigravity();
+            }
+        }
+
+        function startAntigravity() {
+            // Süzülecek tüm elementleri seç
+            const targets = document.querySelectorAll('.ag-target');
+            
+            targets.forEach((el) => {
+                const rect = el.getBoundingClientRect();
+                
+                // Görünmez veya sıfır boyutlu elementleri atla
+                if (rect.width === 0 || rect.height === 0) return;
+
+                // Orijinal elementin kopyasını oluştur (klonlama)
+                const clone = el.cloneNode(true);
+                
+                // Klonun stilini fixed olarak ayarla
+                clone.style.width = rect.width + 'px';
+                clone.style.height = rect.height + 'px';
+                clone.style.left = rect.left + 'px';
+                clone.style.top = rect.top + 'px';
+                clone.classList.add('ag-element');
+                clone.removeAttribute('id'); // ID çakışmasını engelle
+                
+                // Elementlere rastgele başlangıç hızları (vektörler) ata
+                const vx = (Math.random() - 0.5) * 4;
+                const vy = (Math.random() - 0.5) * 4;
+                
+                document.body.appendChild(clone);
+                
+                floatingElements.push({
+                    element: clone,
+                    original: el,
+                    x: rect.left,
+                    y: rect.top,
+                    vx: vx,
+                    vy: vy,
+                    width: rect.width,
+                    height: rect.height
+                });
+                
+                // Orijinal elementi sayfadaki düzeni bozmamak için gizle (visibility ile)
+                el.style.visibility = 'hidden';
+            });
+            
+            // Animasyon döngüsünü başlat
+            animateFloat();
+        }
+
+        function stopAntigravity() {
+            // Animasyonu durdur
+            cancelAnimationFrame(animationId);
+            
+            // Klonları sil ve orijinal elementleri tekrar görünür yap
+            floatingElements.forEach(item => {
+                item.original.style.visibility = 'visible';
+                item.element.remove();
+            });
+            
+            floatingElements = [];
+        }
+
+        function animateFloat() {
+            floatingElements.forEach(item => {
+                // Konumu güncelliyoruz
+                item.x += item.vx;
+                item.y += item.vy;
+                
+                // Ekran sınırlarına çarpma kontrolü (Sekme)
+                if (item.x <= 0) {
+                    item.x = 0;
+                    item.vx *= -1;
+                } else if (item.x + item.width >= window.innerWidth) {
+                    item.x = window.innerWidth - item.width;
+                    item.vx *= -1;
+                }
+                
+                if (item.y <= 0) {
+                    item.y = 0;
+                    item.vy *= -1;
+                } else if (item.y + item.height >= window.innerHeight) {
+                    item.y = window.innerHeight - item.height;
+                    item.vy *= -1;
+                }
+                
+                // Mouse imlecinden kaçma tepkisi
+                // Elementin merkezi
+                const centerX = item.x + item.width / 2;
+                const centerY = item.y + item.height / 2;
+                
+                // Mouse ile aradaki mesafe hesaplaması
+                const dx = centerX - mouseX;
+                const dy = centerY - mouseY;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                
+                // Eğer mouse 150 pikselden daha yakınsa
+                if (dist < 150 && dist > 0) {
+                    // Mesafe ne kadar kısaysa itme gücü (force) o kadar artar
+                    const force = (150 - dist) / 150;
+                    const acceleration = force * 4; 
+                    
+                    item.vx += (dx / dist) * acceleration;
+                    item.vy += (dy / dist) * acceleration;
+                }
+                
+                // Hız limiti (Limit speed to prevent flying too fast)
+                const speed = Math.sqrt(item.vx * item.vx + item.vy * item.vy);
+                const maxSpeed = 7;
+                
+                if (speed > maxSpeed) {
+                    item.vx = (item.vx / speed) * maxSpeed;
+                    item.vy = (item.vy / speed) * maxSpeed;
+                } else if (speed > 1) {
+                    // Doğal yavaşlama (Sürtünme)
+                    item.vx *= 0.98;
+                    item.vy *= 0.98;
+                }
+                
+                // Yeni konumu uygula
+                item.element.style.transform = `translate(${item.x - parseFloat(item.element.style.left)}px, ${item.y - parseFloat(item.element.style.top)}px)`;
+            });
+            
+            // requestAnimationFrame ile akıcı süzülme
+            animationId = requestAnimationFrame(animateFloat);
+        }
+    </script>
+</body>
+</html>
