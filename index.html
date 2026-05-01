@@ -262,16 +262,25 @@
             const spinner = document.getElementById('spinner');
             const errorMsg = document.getElementById('error-msg');
             
+            // GitHub profilinde sabitlediğiniz (pinned) projeler
+            const pinnedRepos = [
+                'BirgulGokturk/Automated-File-Organizer',
+                'nazlikaraagac/akilli-tarim-yonetim-sistemi',
+                'BirgulGokturk/Amazon-Intelligence-Pro',
+                'BirgulGokturk/-Sentinal-AI-Pro'
+            ];
+            
             try {
-                // GitHub repos endpoint'ine istek atılıyor
-                const response = await fetch('https://api.github.com/users/BirgulGokturk/repos?sort=updated');
+                // Her bir repo için ayrı ayrı istek atıyoruz
+                const repoPromises = pinnedRepos.map(repo => 
+                    fetch(`https://api.github.com/repos/${repo}`).then(res => {
+                        if (!res.ok) throw new Error('Veriler alınamadı (API Limitine takılmış olabilirsiniz).');
+                        return res.json();
+                    })
+                );
                 
-                // Hata kontrolü
-                if (!response.ok) {
-                    throw new Error('Veriler alınamadı (API Limitine takılmış olabilirsiniz).');
-                }
-                
-                const repos = await response.json();
+                // Tüm isteklerin tamamlanmasını bekliyoruz
+                const repos = await Promise.all(repoPromises);
                 spinner.style.display = 'none'; // Yükleme başarılı, spinner gizlenir
                 
                 // Repoları DOM'a ekleme
@@ -314,7 +323,7 @@
                 console.error("API Hatası:", error);
                 spinner.style.display = 'none';
                 errorMsg.style.display = 'block';
-                errorMsg.innerText = `Hata: ${error.message}`;
+                errorMsg.innerText = \`Hata: \${error.message}\`;
             }
         }
 
