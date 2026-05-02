@@ -1,489 +1,718 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Birgül Göktürk - Software Engineer</title>
-    
-    <!-- Tailwind CSS (CDN üzerinden) -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Birgül Göktürk — Software Engineer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts: Outfit -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
-    
-    <!-- FontAwesome (İkonlar için) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Tailwind CSS Yapılandırması -->
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
-                    colors: {
-                        bgdark: '#050811', /* Gece mavisi/siyah arka plan */
-                        neon: '#0ea5e9',   /* Neon mavi */
-                    },
                     fontFamily: {
-                        sans: ['Outfit', 'sans-serif'], /* Outfit tipografisi */
+                        display: ['"Poppins"', 'sans-serif'],
+                        sans: ['"Poppins"', 'sans-serif'],
+                    },
+                    colors: {
+                        cream: 'var(--color-cream)',
+                        sand: 'var(--color-sand)',
+                        taupe: 'var(--color-taupe)',
+                        muted: 'var(--color-muted)',
+                        ink: 'var(--color-ink)',
+                        accent: 'var(--color-accent)',
+                        accentLight: 'var(--color-accent-light)',
                     },
                     animation: {
-                        'float': 'float 3s ease-in-out infinite', /* Süzülme animasyonu */
+                        'fade-up': 'fadeUp 0.7s ease forwards',
+                        'fade-in': 'fadeIn 0.6s ease forwards',
                     },
                     keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-10px)' },
-                        }
-                    }
-                }
-            }
-        }
+                        fadeUp: {
+                            '0%': { opacity: '0', transform: 'translateY(24px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                    },
+                },
+            },
+        };
     </script>
-    
-    <!-- Özel CSS Tanımlamaları -->
     <style>
-        /* Akıcı sayfa kaydırma efekti (Smooth Scroll) */
+        :root {
+            --color-cream: #FCE4EC;     /* Clearer soft pink background */
+            --color-sand: #F8BBD0;      /* Slightly darker pink for accents */
+            --color-taupe: #F48FB1;     /* Warm pink taupe */
+            --color-muted: #D81B60;     /* Deep pink/berry */
+            --color-ink: #4A148C;       /* Deep purple/ink */
+            --color-accent: #E91E63;    /* Pink accent */
+            --color-accent-light: #F06292;
+        }
+
+        .dark {
+            --color-cream: #231219;     /* Deep dark pink/maroon */
+            --color-sand: #311824;      /* Dark maroon/rose */
+            --color-taupe: #7A3352;     /* Dark muted rose */
+            --color-muted: #F48FB1;     /* Soft pink for text */
+            --color-ink: #FCE4EC;       /* Very light pink for main text */
+            --color-accent: #FF4081;    /* Vibrant pink */
+            --color-accent-light: #F06292;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         html {
             scroll-behavior: smooth;
         }
-        
+
         body {
-            background-color: #050811;
-            color: #ffffff;
-            overflow-x: hidden;
-            font-family: 'Outfit', sans-serif;
+            background-color: var(--color-cream);
+            color: var(--color-ink);
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
-        
-        /* Kartlar ve butonlar için neon parlama efekti (Neon Glow) */
-        .neon-glow {
-            box-shadow: 0 0 10px rgba(14, 165, 233, 0.4), 0 0 20px rgba(14, 165, 233, 0.2);
-            border: 1px solid rgba(14, 165, 233, 0.3);
-            transition: all 0.3s ease;
-        }
-        .neon-glow:hover {
-            box-shadow: 0 0 20px rgba(14, 165, 233, 0.8), 0 0 40px rgba(14, 165, 233, 0.6);
-            border-color: rgba(14, 165, 233, 0.8);
-            transform: translateY(-5px); /* Hover durumunda süzülme hissiyatını artırır */
-        }
-        
-        /* Antigravity Modu için fixed (sabit) sınıf */
-        .ag-element {
-            position: fixed !important;
+
+        /* Subtle grain overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
             z-index: 9999;
-            pointer-events: none; /* Elementler imleç etkinliklerini engellemesin */
-            margin: 0 !important;
-            box-sizing: border-box;
-            will-change: transform, left, top;
         }
-        
-        /* Yükleme animasyonu (Spinner) */
-        .spinner {
-            border: 4px solid rgba(255, 255, 255, 0.1);
-            border-left-color: #0ea5e9;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
+
+        /* Decorative horizontal rule */
+        .elegant-divider {
+            display: flex;
+            align-items: center;
+            gap: 16px;
         }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+
+        .elegant-divider::before,
+        .elegant-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--color-taupe), transparent);
         }
-        
-        /* Scrollbar stillendirme */
+
+        /* Skill card hover */
+        .skill-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.10);
+        }
+
+        /* Project card hover */
+        .project-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Nav link underline */
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--color-accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Section reveal animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Scrollbar */
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 6px;
         }
+
         ::-webkit-scrollbar-track {
-            background: #050811;
+            background: var(--color-cream);
         }
+
         ::-webkit-scrollbar-thumb {
-            background: #0ea5e9;
-            border-radius: 4px;
+            background: var(--color-taupe);
+            border-radius: 3px;
+        }
+
+        /* Hero background mesh */
+        .hero-mesh {
+            background-color: var(--color-cream);
+            background-image: radial-gradient(ellipse 80% 80% at bottom left, var(--color-sand) 0%, transparent 60%);
+        }
+
+        /* Loading skeleton */
+        .skeleton {
+            background: linear-gradient(90deg, var(--color-sand) 25%, var(--color-taupe) 50%, var(--color-sand) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.4s infinite;
+            opacity: 0.5;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
         }
     </style>
 </head>
-<body class="antialiased selection:bg-neon selection:text-bgdark">
 
-    <!-- Navbar (Üst Menü) -->
-    <nav class="fixed w-full z-50 bg-bgdark/80 backdrop-blur-md border-b border-white/10 transition-all duration-300">
-        <div class="container mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center">
-            <!-- Sol: Logo ve İsim -->
-            <div class="flex items-center space-x-3 mb-4 md:mb-0 ag-target">
-                <i class="fa-solid fa-laptop-code text-neon text-3xl animate-pulse"></i>
-                <span class="text-2xl font-bold tracking-wider hover:text-neon transition-colors cursor-pointer" onclick="window.scrollTo(0,0)">
-                    Birgül Göktürk
-                </span>
-            </div>
-            
-            <!-- Sağ: Menü Linkleri ve Antigravity Butonu -->
-            <div class="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-8">
-                <a href="#hero" class="hover:text-neon transition-colors font-medium">Ana Sayfa</a>
-                <a href="#projects" class="hover:text-neon transition-colors font-medium">Projeler</a>
-                <a href="#skills" class="hover:text-neon transition-colors font-medium">Yetenekler</a>
-                <a href="#contact" class="hover:text-neon transition-colors font-medium">İletişim</a>
-                
-                <!-- Antigravity Butonu -->
-                <button id="ag-btn" onclick="toggleAntigravity()" class="bg-neon text-bgdark px-5 py-2 rounded-full font-bold hover:bg-white transition-all duration-300 neon-glow ag-target">
-                    Antigravity Modu <i class="fa-solid fa-rocket ml-2"></i>
+<body class="font-sans antialiased">
+
+    <!-- ═══════════════════════════════ NAVIGATION ═══════════════════════════════ -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-cream/80 backdrop-blur-md border-b border-taupe/20">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="#hero" class="font-display text-xl font-bold text-ink tracking-wide flex items-center gap-3 group">
+                <div class="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-accent to-ink text-cream shadow-lg group-hover:scale-105 transition-transform duration-300 overflow-hidden">
+                    <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                    <span class="font-display font-bold text-xl relative z-10">B</span>
+                </div>
+                Birgül Göktürk
+            </a>
+            <ul class="hidden md:flex items-center gap-8 text-sm font-medium text-muted">
+                <li><a href="#hero" class="nav-link hover:text-ink transition-colors duration-200">Ana Sayfa</a></li>
+                <li><a href="#projects" class="nav-link hover:text-ink transition-colors duration-200">Projeler</a></li>
+                <li><a href="#skills" class="nav-link hover:text-ink transition-colors duration-200">Yetenekler</a></li>
+                <li><a href="#contact" class="nav-link hover:text-ink transition-colors duration-200">İletişim</a></li>
+            </ul>
+            <div class="flex items-center gap-2 sm:gap-4">
+                <button id="theme-toggle" class="p-2 rounded-full text-muted hover:text-ink hover:bg-sand transition-colors">
+                    <!-- Sun Icon -->
+                    <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                    <!-- Moon Icon -->
+                    <svg id="theme-toggle-dark-icon" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                </button>
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-toggle" class="md:hidden p-2 rounded-lg text-muted hover:text-ink hover:bg-sand transition-colors">
+                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
                 </button>
             </div>
         </div>
+        
+        <!-- Mobile Dropdown -->
+        <div id="mobile-menu" class="md:hidden hidden absolute top-full left-0 right-0 bg-cream/95 backdrop-blur-md border-b border-taupe/20 shadow-lg px-6 py-6 flex flex-col gap-6">
+            <a href="#hero" class="mobile-nav-link text-ink font-medium text-lg hover:text-accent transition-colors">Ana Sayfa</a>
+            <a href="#projects" class="mobile-nav-link text-ink font-medium text-lg hover:text-accent transition-colors">Projeler</a>
+            <a href="#skills" class="mobile-nav-link text-ink font-medium text-lg hover:text-accent transition-colors">Yetenekler</a>
+            <a href="#contact" class="mobile-nav-link text-ink font-medium text-lg hover:text-accent transition-colors">İletişim</a>
+        </div>
     </nav>
 
-    <!-- Hero (Karşılama) Bölümü -->
-    <section id="hero" class="min-h-screen flex items-center justify-center pt-24 relative overflow-hidden">
-        <!-- Arka plan parlamaları -->
-        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-neon/20 rounded-full mix-blend-screen filter blur-[100px] animate-pulse pointer-events-none"></div>
-        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full mix-blend-screen filter blur-[100px] animate-pulse pointer-events-none" style="animation-delay: 1.5s;"></div>
-        
-        <div class="container mx-auto px-6 text-center z-10">
-            <!-- Başlık -->
-            <h1 class="text-5xl md:text-7xl font-bold mb-4 ag-target">
-                Birgül Göktürk
-            </h1>
-            <h2 class="text-2xl md:text-4xl text-neon mb-8 font-light tracking-wide ag-target">
-                Software Engineer
-            </h2>
+    <!-- ═══════════════════════════════ HERO ═══════════════════════════════ -->
+    <section id="hero" class="hero-mesh min-h-screen flex items-center justify-center pt-20 text-center">
+        <div class="max-w-3xl mx-auto px-6 py-24 flex flex-col items-center">
             
-            <!-- Açıklama Vizyon Yazısı -->
-            <p class="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-12 leading-relaxed ag-target">
-                Yapay zeka ve makine öğrenimi sistemleriyle entegre yazılım çözümleri üretiyorum. Modern teknolojileri kullanarak yenilikçi, akıcı ve ölçeklenebilir projeler geliştirmek en büyük tutkum.
+            <div class="animate-fade-up">
+                <h1 class="font-display text-5xl md:text-6xl lg:text-7xl font-semibold text-ink leading-tight mb-2">
+                    Birgül Göktürk
+                </h1>
+                <h2 class="font-display text-2xl md:text-3xl text-accentLight font-normal mb-8">
+                    Software Engineer
+                </h2>
+
+                <p class="text-muted text-lg leading-relaxed max-w-2xl mx-auto mb-10">
+                    Yapay zeka ve makine öğrenimi sistemleriyle entegre yazılım çözümleri üretiyorum. Modern
+                    teknolojileri kullanarak yenilikçi, akıcı ve ölçeklenebilir projeler geliştirmek en büyük tutkum.
+                </p>
+
+                <!-- Social links -->
+                <div class="flex items-center justify-center gap-6 mt-4">
+                    <a href="https://github.com/BirgulGokturk" target="_blank" rel="noopener"
+                        class="w-12 h-12 rounded-full bg-sand flex items-center justify-center text-accent hover:bg-accent hover:text-cream transition-all duration-300 shadow-sm">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+                        </svg>
+                    </a>
+                    <a href="https://www.linkedin.com/in/birg%C3%BCl-g%C3%B6kt%C3%BCrk-3a150b388/" target="_blank" rel="noopener"
+                        class="w-12 h-12 rounded-full bg-sand flex items-center justify-center text-accent hover:bg-accent hover:text-cream transition-all duration-300 shadow-sm">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                    </a>
+                    <a href="mailto:iletisim@birgulgokturk.com"
+                        class="w-12 h-12 rounded-full bg-sand flex items-center justify-center text-accent hover:bg-accent hover:text-cream transition-all duration-300 shadow-sm">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path
+                                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════ ABOUT ═══════════════════════════════ -->
+    <section id="about" class="py-28 bg-sand/40">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="reveal grid md:grid-cols-3 gap-12 items-start">
+
+                <!-- Section label -->
+                <div>
+                    <p class="text-xs font-semibold tracking-[0.2em] uppercase text-accent mb-3">01 — Hakkımda</p>
+                    <h2 class="font-display text-4xl text-ink font-medium leading-snug">Kod ve Vizyon<br />Arasında.
+                    </h2>
+                </div>
+
+                <!-- Bio text -->
+                <div class="md:col-span-2">
+                    <p class="text-muted text-lg leading-relaxed mb-6">
+                        Yazılım mühendisliği dünyasında özellikle <strong class="text-ink font-medium">yapay
+                            zeka</strong> ve <strong class="text-ink font-medium">makine öğrenimi</strong> alanlarına
+                        odaklanıyorum. Hem nesne yönelimli programlama prensiplerini hem de modern veri bilimi
+                        araçlarını ustalıkla bir araya getirerek gerçek dünya problemlerine çözüm üretiyorum.
+                    </p>
+                    <p class="text-muted text-base leading-relaxed">
+                        Temiz kod yazmak ve sürdürülebilir mimariler kurmak, her projede önceliğim. Teknoloji ile insanı
+                        buluşturan, akıllı ve ölçeklenebilir sistemler geliştirmek için çalışıyorum.
+                    </p>
+
+                    <!-- Stats row -->
+                    <div class="mt-10 grid grid-cols-3 gap-6">
+                        <div class="text-center">
+                            <p class="font-display text-3xl font-medium text-ink mb-1">4+</p>
+                            <p class="text-xs text-muted uppercase tracking-wider font-medium">Tamamlanan Proje</p>
+                        </div>
+                        <div class="text-center border-x border-taupe/30">
+                            <p class="font-display text-3xl font-medium text-ink mb-1">2</p>
+                            <p class="text-xs text-muted uppercase tracking-wider font-medium">Temel Dil</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="font-display text-3xl font-medium text-ink mb-1">AI</p>
+                            <p class="text-xs text-muted uppercase tracking-wider font-medium">Odak Alanı</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════ SKILLS ═══════════════════════════════ -->
+    <section id="skills" class="py-28">
+        <div class="max-w-6xl mx-auto px-6">
+
+            <!-- Header -->
+            <div class="reveal text-center mb-16">
+                <p class="text-xs font-semibold tracking-[0.2em] uppercase text-accent mb-3">02 — Yetenekler</p>
+                <h2 class="font-display text-4xl text-ink font-medium">Teknik Yetkinlikler</h2>
+            </div>
+
+            <!-- Skills grid -->
+            <div class="reveal grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+                <!-- Java -->
+                <a href="https://dev.java/" target="_blank" rel="noopener" class="skill-card relative bg-cream border border-taupe/30 rounded-3xl p-8 flex flex-col gap-5 group overflow-hidden isolation-auto cursor-pointer hover:border-amber-300/50">
+                    <!-- Glow effect -->
+                    <div class="absolute -top-12 -right-12 w-32 h-32 rounded-full blur-2xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 pointer-events-none bg-amber-500"></div>
+                    
+                    <div class="w-12 h-12 rounded-2xl bg-amber-50 border border-amber-100 flex items-center justify-center relative z-10 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-6 h-6 text-amber-600" fill="currentColor" viewBox="0 0 128 128">
+                            <path d="M47.617 98.12s-4.767 2.774 3.397 3.71c9.892 1.13 14.947.968 25.845-1.092 0 0 2.871 1.795 6.873 3.351-24.439 10.47-55.308-.607-36.115-5.969zm-2.988-13.665s-5.348 3.959 2.823 4.805c10.567 1.091 18.91 1.18 33.354-1.6 0 0 1.993 2.025 5.132 3.131-29.542 8.64-62.446.68-41.309-6.336z"/>
+                            <path d="M69.802 61.271c6.025 6.935-1.58 13.17-1.58 13.17s15.289-7.891 8.269-17.777c-6.559-9.215-11.587-13.792 15.635-29.58 0 .001-42.731 10.67-22.324 34.187z"/>
+                            <path d="M102.123 108.229s3.529 2.91-3.888 5.159c-14.102 4.272-58.706 5.56-71.094.171-4.451-1.938 3.899-4.625 6.526-5.192 2.739-.593 4.303-.485 4.303-.485-4.953-3.487-32.013 6.85-13.743 9.815 49.821 8.076 90.817-3.637 77.896-9.468zM49.912 70.294s-22.686 5.389-8.033 7.348c6.188.828 18.518.638 30.011-.326 9.39-.789 18.813-2.474 18.813-2.474s-3.308 1.419-5.704 3.053c-23.042 6.061-67.544 3.238-54.731-2.958 10.832-5.239 19.644-4.643 19.644-4.643zm40.697 22.747c23.421-12.167 12.591-23.86 5.032-22.285-1.848.385-2.677.72-2.677.72s.688-1.079 2-1.543c14.953-5.255 26.451 15.503-4.823 23.725 0-.002.359-.327.468-.617z"/>
+                            <path d="M76.491 1.587S89.459 14.563 64.188 34.51c-20.266 16.006-4.621 25.13-.007 35.559-11.831-10.673-20.509-20.07-14.688-28.815C58.041 28.42 81.722 22.195 76.491 1.587z"/>
+                            <path d="M52.214 126.021c22.476 1.437 57-.8 57.817-11.436 0 0-1.571 4.032-18.577 7.231-19.186 3.612-42.854 3.191-56.887.874 0 .001 2.875 2.381 17.647 3.331z"/>
+                        </svg>
+                    </div>
+                    
+                    <div class="relative z-10">
+                        <div class="flex justify-between items-end mb-2">
+                            <h3 class="font-semibold text-ink text-lg">Java</h3>
+                            <span class="text-xs font-bold text-amber-600">90%</span>
+                        </div>
+                        <!-- Progress Bar -->
+                        <div class="w-full bg-amber-100/50 rounded-full h-1.5 mb-4 overflow-hidden">
+                            <div class="bg-gradient-to-r from-amber-400 to-amber-600 h-1.5 rounded-full shadow-[0_0_10px_rgba(245,158,11,0.5)] transform origin-left transition-transform duration-1000 ease-out" style="width: 90%"></div>
+                        </div>
+                        <p class="text-sm text-muted leading-relaxed">OOP mimarileri, back-end geliştirme ve kurumsal uygulama tasarımı.</p>
+                    </div>
+                    
+                    <div class="mt-auto flex flex-wrap gap-1.5 relative z-10">
+                        <span class="text-xs bg-amber-50 text-amber-700 border border-amber-100 rounded-full px-3 py-1 font-medium">OOP</span>
+                        <span class="text-xs bg-amber-50 text-amber-700 border border-amber-100 rounded-full px-3 py-1 font-medium">Back-end</span>
+                    </div>
+                </a>
+
+                <!-- Python -->
+                <a href="https://www.python.org/" target="_blank" rel="noopener" class="skill-card relative bg-cream border border-taupe/30 rounded-3xl p-8 flex flex-col gap-5 group overflow-hidden isolation-auto cursor-pointer hover:border-blue-300/50">
+                    <!-- Glow effect -->
+                    <div class="absolute -top-12 -right-12 w-32 h-32 rounded-full blur-2xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 pointer-events-none bg-blue-500"></div>
+                    
+                    <div class="w-12 h-12 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center relative z-10 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-6 h-6 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M14.25.18l.9.2.73.26.59.3.45.32.34.34.25.34.16.33.1.3.04.26.02.2-.01.13V8.5l-.05.63-.13.55-.21.46-.26.38-.3.31-.33.25-.35.19-.35.14-.33.1-.3.07-.26.04-.21.02H8.77l-.69.05-.59.14-.5.22-.41.27-.33.32-.27.35-.2.36-.15.37-.1.35-.07.32-.04.27-.02.21v3.06H3.17l-.21-.03-.28-.07-.32-.12-.35-.18-.36-.26-.36-.36-.35-.46-.32-.59-.28-.73-.21-.88-.14-1.05-.05-1.23.06-1.22.16-1.04.24-.87.32-.71.36-.57.4-.44.42-.33.42-.24.4-.16.36-.1.32-.05.24-.01h.16l.06.01h8.16v-.83H6.18l-.01-2.75-.02-.37.05-.34.11-.31.17-.28.25-.26.31-.23.38-.2.44-.18.51-.15.58-.12.64-.1.71-.06.77-.04.84-.02 1.27.05zm-6.3 1.98l-.23.33-.08.41.08.41.23.34.33.22.41.09.41-.09.33-.22.23-.34.08-.41-.08-.41-.23-.33-.33-.22-.41-.09-.41.09zm13.09 3.95l.28.06.32.12.35.18.36.27.36.35.35.47.32.59.28.73.21.88.14 1.04.05 1.23-.06 1.23-.16 1.04-.24.86-.32.71-.36.57-.4.45-.42.33-.42.24-.4.16-.36.09-.32.05-.24.02-.16-.01h-8.22v.82h5.84l.01 2.76.02.36-.05.34-.11.31-.17.29-.25.25-.31.24-.38.2-.44.17-.51.15-.58.13-.64.09-.71.07-.77.04-.84.01-1.27-.04-1.07-.14-.9-.2-.73-.25-.59-.3-.45-.33-.34-.34-.25-.34-.16-.33-.1-.3-.04-.25-.02-.2.01-.13v-5.34l.05-.64.13-.54.21-.46.26-.38.3-.32.33-.24.35-.2.35-.14.33-.1.3-.06.26-.04.21-.02.13-.01h5.84l.69-.05.59-.14.5-.21.41-.28.33-.32.27-.35.2-.36.15-.36.1-.35.07-.32.04-.28.02-.21V6.07h2.09l.14.01zm-6.47 14.25l-.23.33-.08.41.08.41.23.33.33.23.41.08.41-.08.33-.23.23-.33.08-.41-.08-.41-.23-.33-.33-.23-.41-.08-.41.08z"/>
+                        </svg>
+                    </div>
+                    
+                    <div class="relative z-10">
+                        <div class="flex justify-between items-end mb-2">
+                            <h3 class="font-semibold text-ink text-lg">Python</h3>
+                            <span class="text-xs font-bold text-blue-600">85%</span>
+                        </div>
+                        <!-- Progress Bar -->
+                        <div class="w-full bg-blue-100/50 rounded-full h-1.5 mb-4 overflow-hidden">
+                            <div class="bg-gradient-to-r from-blue-400 to-blue-600 h-1.5 rounded-full shadow-[0_0_10px_rgba(59,130,246,0.5)] transform origin-left transition-transform duration-1000 ease-out" style="width: 85%"></div>
+                        </div>
+                        <p class="text-sm text-muted leading-relaxed">AI / ML modelleri, otomasyon scriptleri ve veri analizi uygulamaları.</p>
+                    </div>
+                    
+                    <div class="mt-auto flex flex-wrap gap-1.5 relative z-10">
+                        <span class="text-xs bg-blue-50 text-blue-700 border border-blue-100 rounded-full px-3 py-1 font-medium">AI / ML</span>
+                        <span class="text-xs bg-blue-50 text-blue-700 border border-blue-100 rounded-full px-3 py-1 font-medium">Scripts</span>
+                    </div>
+                </a>
+
+                <!-- OOP -->
+                <a href="https://tr.wikipedia.org/wiki/Nesne_y%C3%B6nelimli_programlama" target="_blank" rel="noopener" class="skill-card relative bg-cream border border-taupe/30 rounded-3xl p-8 flex flex-col gap-5 group overflow-hidden isolation-auto cursor-pointer hover:border-rose-300/50">
+                    <!-- Glow effect -->
+                    <div class="absolute -top-12 -right-12 w-32 h-32 rounded-full blur-2xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 pointer-events-none bg-rose-500"></div>
+                    
+                    <div class="w-12 h-12 rounded-2xl bg-rose-50 border border-rose-100 flex items-center justify-center relative z-10 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-6 h-6 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                            <path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                        </svg>
+                    </div>
+                    
+                    <div class="relative z-10">
+                        <div class="flex justify-between items-end mb-2">
+                            <h3 class="font-semibold text-ink text-lg leading-tight">OOP Mimari</h3>
+                            <span class="text-xs font-bold text-rose-600">95%</span>
+                        </div>
+                        <!-- Progress Bar -->
+                        <div class="w-full bg-rose-100/50 rounded-full h-1.5 mb-4 overflow-hidden">
+                            <div class="bg-gradient-to-r from-rose-400 to-rose-600 h-1.5 rounded-full shadow-[0_0_10px_rgba(244,63,94,0.5)] transform origin-left transition-transform duration-1000 ease-out" style="width: 95%"></div>
+                        </div>
+                        <p class="text-sm text-muted leading-relaxed">SOLID prensipleri, tasarım desenleri ve modüler mimari.</p>
+                    </div>
+                    
+                    <div class="mt-auto flex flex-wrap gap-1.5 relative z-10">
+                        <span class="text-xs bg-rose-50 text-rose-700 border border-rose-100 rounded-full px-3 py-1 font-medium">SOLID</span>
+                        <span class="text-xs bg-rose-50 text-rose-700 border border-rose-100 rounded-full px-3 py-1 font-medium">Patterns</span>
+                    </div>
+                </a>
+
+                <!-- Machine Learning -->
+                <a href="https://tr.wikipedia.org/wiki/Makine_%C3%B6%C4%9Frenimi" target="_blank" rel="noopener" class="skill-card relative bg-cream border border-taupe/30 rounded-3xl p-8 flex flex-col gap-5 group overflow-hidden isolation-auto cursor-pointer hover:border-emerald-300/50">
+                    <!-- Glow effect -->
+                    <div class="absolute -top-12 -right-12 w-32 h-32 rounded-full blur-2xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 pointer-events-none bg-emerald-500"></div>
+                    
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center relative z-10 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-6 h-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                            <path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18" />
+                        </svg>
+                    </div>
+                    
+                    <div class="relative z-10">
+                        <div class="flex justify-between items-end mb-2">
+                            <h3 class="font-semibold text-ink text-lg leading-tight">Machine Learning</h3>
+                            <span class="text-xs font-bold text-emerald-600">80%</span>
+                        </div>
+                        <!-- Progress Bar -->
+                        <div class="w-full bg-emerald-100/50 rounded-full h-1.5 mb-4 overflow-hidden">
+                            <div class="bg-gradient-to-r from-emerald-400 to-emerald-600 h-1.5 rounded-full shadow-[0_0_10px_rgba(16,185,129,0.5)] transform origin-left transition-transform duration-1000 ease-out" style="width: 80%"></div>
+                        </div>
+                        <p class="text-sm text-muted leading-relaxed">Veri modelleri, algoritmalar ve akıllı sistem entegrasyonları.</p>
+                    </div>
+                    
+                    <div class="mt-auto flex flex-wrap gap-1.5 relative z-10">
+                        <span class="text-xs bg-emerald-50 text-emerald-700 border border-emerald-100 rounded-full px-3 py-1 font-medium">Modeller</span>
+                        <span class="text-xs bg-emerald-50 text-emerald-700 border border-emerald-100 rounded-full px-3 py-1 font-medium">Algoritmalar</span>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════ PROJECTS ═══════════════════════════════ -->
+    <section id="projects" class="py-28 bg-sand/40">
+        <div class="max-w-6xl mx-auto px-6">
+
+            <!-- Header -->
+            <div class="reveal text-center mb-16">
+                <p class="text-xs font-semibold tracking-[0.2em] uppercase text-accent mb-3">03 — Projeler</p>
+                <h2 class="font-display text-4xl text-ink font-medium">Seçili Çalışmalar</h2>
+                <p class="text-muted mt-3 max-w-md mx-auto">GitHub üzerindeki aktif projelerimden bir seçki.</p>
+            </div>
+
+            <!-- Projects grid -->
+            <div id="projects-grid" class="reveal grid sm:grid-cols-2 gap-6">
+                <!-- Loading skeletons -->
+                <div class="skeleton rounded-3xl h-60"></div>
+                <div class="skeleton rounded-3xl h-60"></div>
+                <div class="skeleton rounded-3xl h-60"></div>
+                <div class="skeleton rounded-3xl h-60"></div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════ CONTACT ═══════════════════════════════ -->
+    <section id="contact" class="py-28">
+        <div class="max-w-6xl mx-auto px-6">
+
+            <div
+                class="reveal bg-gradient-to-br from-ink to-accent rounded-3xl p-12 md:p-16 text-center overflow-hidden relative">
+                <!-- Decorative rings -->
+                <div class="absolute -top-20 -right-20 w-64 h-64 rounded-full border border-cream/10"></div>
+                <div class="absolute -bottom-16 -left-16 w-48 h-48 rounded-full border border-cream/10"></div>
+
+                <p class="text-xs font-semibold tracking-[0.2em] uppercase text-accentLight mb-4 relative z-10">04 —
+                    İletişim</p>
+                <h2 class="font-display text-4xl md:text-5xl text-cream font-medium mb-4 relative z-10">Birlikte
+                    Çalışalım.</h2>
+                <p class="text-cream/60 mb-10 max-w-md mx-auto relative z-10">Yeni projeler, iş birlikleri veya sadece
+                    bir merhaba için bana ulaşın.</p>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10 relative z-10">
+                    <!-- Email -->
+                    <a href="mailto:iletisim@birgulgokturk.com"
+                        class="inline-flex items-center gap-3 bg-cream text-ink font-medium text-sm rounded-full px-7 py-3.5 hover:bg-sand transition-colors duration-300 group">
+                        <svg class="w-4 h-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                            stroke-width="2">
+                            <path
+                                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                        iletisim@birgulgokturk.com
+                    </a>
+                </div>
+
+                <!-- Social links -->
+                <div class="flex items-center justify-center gap-4 relative z-10">
+                    <a href="https://github.com/BirgulGokturk" target="_blank" rel="noopener"
+                        class="w-11 h-11 rounded-full border border-cream/30 flex items-center justify-center text-cream/60 hover:text-cream hover:border-cream/60 transition-all duration-300">
+                        <svg class="w-4.5 h-4.5" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+                        </svg>
+                    </a>
+                    <a href="https://www.linkedin.com/in/birg%C3%BCl-g%C3%B6kt%C3%BCrk-3a150b388/" target="_blank" rel="noopener"
+                        class="w-11 h-11 rounded-full border border-cream/30 flex items-center justify-center text-cream/60 hover:text-cream hover:border-cream/60 transition-all duration-300">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════ FOOTER ═══════════════════════════════ -->
+    <footer class="py-8 border-t border-taupe/20">
+        <div class="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <span class="font-display text-lg text-ink font-medium">Birgül Göktürk</span>
+            <p class="text-xs text-muted text-center">
+                © 2025 Birgül Göktürk. Tüm hakları saklıdır.
             </p>
-            
-            <!-- Sosyal Medya ve İletişim İkonları -->
-            <div class="flex justify-center space-x-6 ag-target">
-                <a href="https://github.com/BirgulGokturk" target="_blank" class="w-14 h-14 rounded-full bg-white/5 flex items-center justify-center text-2xl hover:text-bgdark hover:bg-neon transition-all duration-300 hover:animate-float neon-glow">
-                    <i class="fa-brands fa-github"></i>
-                </a>
-                <a href="https://www.linkedin.com/in/birg%C3%BCl-g%C3%B6kt%C3%BCrk-3a150b388" target="_blank" class="w-14 h-14 rounded-full bg-white/5 flex items-center justify-center text-2xl hover:text-bgdark hover:bg-neon transition-all duration-300 hover:animate-float neon-glow">
-                    <i class="fa-brands fa-linkedin-in"></i>
-                </a>
-                <a href="tel:0531318737" class="w-14 h-14 rounded-full bg-white/5 flex items-center justify-center text-2xl hover:text-bgdark hover:bg-neon transition-all duration-300 hover:animate-float neon-glow" title="0531 318 737">
-                    <i class="fa-solid fa-phone"></i>
-                </a>
+            <div class="flex items-center gap-1 text-xs text-muted">
+                <span>Elazığ, Türkiye</span>
+                <span class="mx-2">·</span>
+                <span>Software Engineer</span>
             </div>
         </div>
-    </section>
+    </footer>
 
-    <!-- Projeler Bölümü (GitHub API) -->
-    <section id="projects" class="py-24 bg-black/40 border-y border-white/5">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl md:text-5xl font-bold text-center mb-16 ag-target">Öne Çıkan <span class="text-neon">Projeler</span></h2>
-            
-            <!-- Yükleme Durumu (Spinner) -->
-            <div id="spinner" class="spinner mb-10"></div>
-            
-            <!-- Hata Mesajı Alanı -->
-            <div id="error-msg" class="text-red-500 text-center hidden text-lg mb-10 ag-target"></div>
-            
-            <!-- Projelerin Listeleneceği Container -->
-            <div id="projects-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- JavaScript ile GitHub API'den gelen veriler buraya eklenecek -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Yetenekler (Skills) Bölümü -->
-    <section id="skills" class="py-24">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl md:text-5xl font-bold text-center mb-16 ag-target">Teknik <span class="text-neon">Yetenekler</span></h2>
-            
-            <!-- 4'lü Grid Yapısı -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Yetenek 1 -->
-                <div class="bg-white/5 p-8 rounded-xl backdrop-blur-sm hover:animate-float transition-all duration-300 neon-glow text-center ag-target">
-                    <i class="fa-brands fa-java text-5xl text-neon mb-6"></i>
-                    <h3 class="text-2xl font-bold mb-3">Java</h3>
-                    <p class="text-gray-400">OOP & Back-end Geliştirme</p>
-                </div>
-                
-                <!-- Yetenek 2 -->
-                <div class="bg-white/5 p-8 rounded-xl backdrop-blur-sm hover:animate-float transition-all duration-300 neon-glow text-center ag-target">
-                    <i class="fa-brands fa-python text-5xl text-neon mb-6"></i>
-                    <h3 class="text-2xl font-bold mb-3">Python</h3>
-                    <p class="text-gray-400">AI / ML & Scripts</p>
-                </div>
-                
-                <!-- Yetenek 3 -->
-                <div class="bg-white/5 p-8 rounded-xl backdrop-blur-sm hover:animate-float transition-all duration-300 neon-glow text-center ag-target">
-                    <i class="fa-solid fa-cubes text-5xl text-neon mb-6"></i>
-                    <h3 class="text-2xl font-bold mb-3">OOP</h3>
-                    <p class="text-gray-400">Nesne Yönelimli Tasarım</p>
-                </div>
-                
-                <!-- Yetenek 4 -->
-                <div class="bg-white/5 p-8 rounded-xl backdrop-blur-sm hover:animate-float transition-all duration-300 neon-glow text-center ag-target">
-                    <i class="fa-solid fa-network-wired text-5xl text-neon mb-6"></i>
-                    <h3 class="text-2xl font-bold mb-3">Machine Learning</h3>
-                    <p class="text-gray-400">Veri Modelleri Sistemleri</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- İletişim ve Footer -->
-    <section id="contact" class="py-20 bg-black/60 border-t border-white/5 relative">
-        <div class="container mx-auto px-6 text-center ag-target">
-            <h2 class="text-3xl md:text-4xl font-bold mb-6">İletişime <span class="text-neon">Geç</span></h2>
-            <p class="text-gray-400 mb-10 max-w-xl mx-auto text-lg">
-                Yeni bir proje fikriniz mi var veya ekibinize değer katacak bir mühendis mi arıyorsunuz? Benimle iletişime geçin.
-            </p>
-            
-            <div class="flex flex-col items-center space-y-4 mb-12">
-                <a href="mailto:iletisim@birgulgokturk.com" class="text-xl hover:text-neon transition-colors flex items-center">
-                    <i class="fa-solid fa-envelope mr-3 text-neon"></i> iletisim@birgulgokturk.com
-                </a>
-                <a href="tel:0531318737" class="text-xl hover:text-neon transition-colors flex items-center">
-                    <i class="fa-solid fa-phone mr-3 text-neon"></i> 0531 318 737
-                </a>
-            </div>
-            
-            <div class="flex justify-center space-x-6 mb-12">
-                <a href="https://github.com/BirgulGokturk" target="_blank" class="text-3xl text-gray-400 hover:text-neon transition-colors hover:animate-float">
-                    <i class="fa-brands fa-github"></i>
-                </a>
-                <a href="https://www.linkedin.com/in/birg%C3%BCl-g%C3%B6kt%C3%BCrk-3a150b388" target="_blank" class="text-3xl text-gray-400 hover:text-neon transition-colors hover:animate-float">
-                    <i class="fa-brands fa-linkedin-in"></i>
-                </a>
-            </div>
-            
-            <p class="text-gray-600 text-sm">
-                &copy; 2026 Birgül Göktürk. Tasarlandı ve Kodlandı.
-            </p>
-        </div>
-    </section>
-
-    <!-- JavaScript Kodları -->
+    <!-- ═══════════════════════════════ JAVASCRIPT ═══════════════════════════════ -->
     <script>
-        // --- 1. GitHub API Entegrasyonu (Projeler) ---
-        async function fetchGitHubProjects() {
-            const container = document.getElementById('projects-container');
-            const spinner = document.getElementById('spinner');
-            const errorMsg = document.getElementById('error-msg');
-            
-            // GitHub profilinde sabitlediğiniz (pinned) projeler
-            const pinnedRepos = [
-                'BirgulGokturk/Automated-File-Organizer',
-                'nazlikaraagac/akilli-tarim-yonetim-sistemi',
-                'BirgulGokturk/Amazon-Intelligence-Pro',
-                'BirgulGokturk/-Sentinal-AI-Pro'
-            ];
-            
-            try {
-                // Her bir repo için ayrı ayrı istek atıyoruz
-                const repoPromises = pinnedRepos.map(repo => 
-                    fetch(`https://api.github.com/repos/${repo}`).then(res => {
-                        if (!res.ok) throw new Error('Veriler alınamadı (API Limitine takılmış olabilirsiniz).');
-                        return res.json();
-                    })
-                );
-                
-                // Tüm isteklerin tamamlanmasını bekliyoruz
-                const repos = await Promise.all(repoPromises);
-                spinner.style.display = 'none'; // Yükleme başarılı, spinner gizlenir
-                
-                // Repoları DOM'a ekleme
-                repos.forEach(repo => {
-                    const card = document.createElement('div');
-                    // Karta ag-target sınıfı ekliyoruz ki Antigravity modunda süzülsün
-                    card.className = 'bg-white/5 p-6 rounded-xl backdrop-blur-sm hover:animate-float transition-all duration-300 neon-glow ag-target flex flex-col justify-between h-full';
-                    
-                    const description = repo.description || 'Bu proje için henüz bir açıklama girilmemiş.';
-                    const language = repo.language || 'Belirtilmemiş';
-                    
-                    card.innerHTML = `
-                        <div>
-                            <div class="flex justify-between items-start mb-4">
-                                <h3 class="text-xl font-bold text-neon line-clamp-1" title="${repo.name}">${repo.name}</h3>
-                                <i class="fa-brands fa-github text-gray-400 text-xl"></i>
-                            </div>
-                            <p class="text-gray-300 mb-6 text-sm h-16 overflow-hidden">${description}</p>
-                        </div>
-                        <div>
-                            <div class="flex items-center space-x-2 mb-4 text-xs font-mono bg-black/30 w-fit px-3 py-1 rounded-full text-gray-300 border border-white/10">
-                                <span class="w-2 h-2 rounded-full bg-neon"></span>
-                                <span>${language}</span>
-                            </div>
-                            <a href="${repo.html_url}" target="_blank" class="inline-block w-full text-center py-2 bg-transparent border border-neon text-neon rounded-lg hover:bg-neon hover:text-bgdark transition-all duration-300 font-bold">
-                                Projeyi İncele <i class="fa-solid fa-arrow-right ml-2"></i>
-                            </a>
-                        </div>
-                    `;
-                    container.appendChild(card);
-                });
+        // ─── Theme Toggle ───
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+        const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
 
-                // Eğer repo yoksa
-                if (repos.length === 0) {
-                    container.innerHTML = '<p class="text-gray-400 col-span-full text-center text-lg">Herkese açık proje bulunamadı.</p>';
-                }
-                
-            } catch (error) {
-                // Try/Catch hata yönetimi
-                console.error("API Hatası:", error);
-                spinner.style.display = 'none';
-                errorMsg.style.display = 'block';
-                errorMsg.innerText = \`Hata: \${error.message}\`;
-            }
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            themeToggleLightIcon.classList.remove('hidden');
+            themeToggleDarkIcon.classList.add('hidden');
+        } else {
+            document.documentElement.classList.remove('dark');
+            themeToggleDarkIcon.classList.remove('hidden');
+            themeToggleLightIcon.classList.add('hidden');
         }
 
-        // Sayfa yüklendiğinde projeleri çek
-        document.addEventListener('DOMContentLoaded', fetchGitHubProjects);
+        themeToggleBtn.addEventListener('click', function() {
+            themeToggleDarkIcon.classList.toggle('hidden');
+            themeToggleLightIcon.classList.toggle('hidden');
 
-
-        // --- 2. Antigravity (Yerçekimsiz) Modu ---
-        let isAntigravity = false;
-        let floatingElements = [];
-        let mouseX = window.innerWidth / 2;
-        let mouseY = window.innerHeight / 2;
-        let animationId;
-
-        // Mouse imlecini takip et
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
         });
 
-        // Butona tıklandığında tetiklenecek fonksiyon
-        function toggleAntigravity() {
-            isAntigravity = !isAntigravity;
-            const btn = document.getElementById('ag-btn');
-            
-            if (isAntigravity) {
-                btn.innerHTML = 'Normale Dön <i class="fa-solid fa-arrow-down ml-2"></i>';
-                btn.classList.replace('bg-neon', 'bg-red-500');
-                btn.classList.replace('text-bgdark', 'text-white');
-                startAntigravity();
-            } else {
-                btn.innerHTML = 'Antigravity Modu <i class="fa-solid fa-rocket ml-2"></i>';
-                btn.classList.replace('bg-red-500', 'bg-neon');
-                btn.classList.replace('text-white', 'text-bgdark');
-                stopAntigravity();
+        // ─── Mobile Menu ───
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+        if (mobileMenuToggle && mobileMenu) {
+            mobileMenuToggle.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+        }
+
+        // ─── Scroll reveal ───
+        const revealEls = document.querySelectorAll('.reveal');
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    io.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        revealEls.forEach(el => io.observe(el));
+
+        // ─── GitHub Projects ───
+        const repos = [
+            { owner: 'BirgulGokturk', repo: 'Automated-File-Organizer', icon: 'M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z', desc: 'Dosyaları türlerine göre otomatik sınıflandıran ve düzenleyen akıllı bir otomasyon aracı.' },
+            { owner: 'nazlikaraagac', repo: 'akilli-tarim-yonetim-sistemi', icon: 'M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z', desc: 'Tarımsal süreçlerin dijital takibi ve verimliliğinin artırılması amacıyla geliştirilen IoT destekli akıllı tarım yönetim sistemi.' },
+            { owner: 'BirgulGokturk', repo: 'Amazon-Intelligence-Pro', icon: 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6', desc: 'Ürünlerin fiyat geçmişini analiz eden ve gerçek zamanlı veri çeken profesyonel bir e-ticaret uygulaması.' },
+            { owner: 'BirgulGokturk', repo: '-Sentinal-AI-Pro', icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z', desc: 'Finansal piyasaları analiz eden, görüntü ve doğal dil işleme destekli, yapay zeka ile güçlendirilmiş yatırım platformu.' },
+        ];
+
+        const langColors = {
+            Python: '#3572A5',
+            Java: '#b07219',
+            JavaScript: '#f1e05a',
+            TypeScript: '#3178c6',
+            HTML: '#e34c26',
+            CSS: '#563d7c',
+            Shell: '#89e051',
+            null: '#C9BEB1',
+        };
+
+        const langBg = {
+            Python: 'bg-blue-50 text-blue-700',
+            Java: 'bg-amber-50 text-amber-700',
+            JavaScript: 'bg-yellow-50 text-yellow-700',
+            TypeScript: 'bg-blue-50 text-blue-700',
+            HTML: 'bg-orange-50 text-orange-700',
+            CSS: 'bg-purple-50 text-purple-700',
+        };
+
+        async function fetchRepo({ owner, repo }) {
+            try {
+                const res = await fetch(`https://api.github.com/repos/${owner}/${repo}`);
+                if (!res.ok) throw new Error('not found');
+                return await res.json();
+            } catch {
+                return null;
             }
         }
 
-        function startAntigravity() {
-            // Süzülecek tüm elementleri seç
-            const targets = document.querySelectorAll('.ag-target');
-            
-            targets.forEach((el) => {
-                const rect = el.getBoundingClientRect();
-                
-                // Görünmez veya sıfır boyutlu elementleri atla
-                if (rect.width === 0 || rect.height === 0) return;
+        function buildCard(data, { owner, repo, icon, desc: customDesc }) {
+            const name = data ? data.name : repo;
+            const desc = customDesc || (data ? (data.description || 'Açıklama eklenmemiş.') : 'GitHub\'dan veri yüklenemedi.');
+            const stars = data ? data.stargazers_count : '—';
+            const forks = data ? data.forks_count : '—';
+            const lang = data ? data.language : null;
+            const url = data ? data.html_url : `https://github.com/${owner}/${repo}`;
+            const color = langColors[lang] || langColors[null];
+            const badge = lang ? `<span class="text-xs ${langBg[lang] || 'bg-gray-100 text-gray-600'} rounded-full px-3 py-1 font-medium">${lang}</span>` : '';
 
-                // Orijinal elementin kopyasını oluştur (klonlama)
-                const clone = el.cloneNode(true);
-                
-                // Klonun stilini fixed olarak ayarla
-                clone.style.width = rect.width + 'px';
-                clone.style.height = rect.height + 'px';
-                clone.style.left = rect.left + 'px';
-                clone.style.top = rect.top + 'px';
-                clone.classList.add('ag-element');
-                clone.removeAttribute('id'); // ID çakışmasını engelle
-                
-                // Elementlere rastgele başlangıç hızları (vektörler) ata
-                const vx = (Math.random() - 0.5) * 4;
-                const vy = (Math.random() - 0.5) * 4;
-                
-                document.body.appendChild(clone);
-                
-                floatingElements.push({
-                    element: clone,
-                    original: el,
-                    x: rect.left,
-                    y: rect.top,
-                    vx: vx,
-                    vy: vy,
-                    width: rect.width,
-                    height: rect.height
-                });
-                
-                // Orijinal elementi sayfadaki düzeni bozmamak için gizle (visibility ile)
-                el.style.visibility = 'hidden';
-            });
-            
-            // Animasyon döngüsünü başlat
-            animateFloat();
+            return `
+        <div class="project-card relative bg-cream border border-taupe/30 rounded-3xl p-8 flex flex-col gap-5 group overflow-hidden isolation-auto">
+          <!-- Decorative glow -->
+          <div class="absolute -top-24 -right-24 w-48 h-48 rounded-full blur-3xl opacity-20 group-hover:opacity-50 transition-opacity duration-500 pointer-events-none" style="background:${color};"></div>
+          
+          <div class="flex items-start justify-between gap-4 relative z-10">
+            <div class="w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3" style="background:${color}15; border: 1px solid ${color}30;">
+              <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="${color}" stroke-width="1.8">
+                <path stroke-linecap="round" stroke-linejoin="round" d="${icon || 'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4'}" />
+              </svg>
+            </div>
+            ${badge}
+          </div>
+
+          <div class="flex-1 relative z-10 mt-2">
+            <h3 class="font-display font-semibold text-xl text-ink mb-2 group-hover:text-accent transition-colors duration-300">${name.replace(/-/g, ' ').replace(/^\s/, '')}</h3>
+            <p class="text-sm text-muted leading-relaxed line-clamp-3">${desc}</p>
+          </div>
+
+          <div class="flex items-center justify-end pt-4 border-t border-taupe/20 relative z-10">
+            <a href="${url}" target="_blank" rel="noopener"
+              class="inline-flex items-center gap-2 text-sm font-semibold text-accent hover:text-ink transition-colors duration-200 bg-sand/30 hover:bg-sand px-4 py-2 rounded-full">
+              İncele
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
+          </div>
+
+          <!-- Hover accent bar -->
+          <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-accent to-taupe transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out z-20"></div>
+        </div>
+      `;
         }
 
-        function stopAntigravity() {
-            // Animasyonu durdur
-            cancelAnimationFrame(animationId);
-            
-            // Klonları sil ve orijinal elementleri tekrar görünür yap
-            floatingElements.forEach(item => {
-                item.original.style.visibility = 'visible';
-                item.element.remove();
-            });
-            
-            floatingElements = [];
+        async function loadProjects() {
+            const grid = document.getElementById('projects-grid');
+            const results = await Promise.all(repos.map(fetchRepo));
+            grid.innerHTML = results.map((data, i) => buildCard(data, repos[i])).join('');
         }
 
-        function animateFloat() {
-            floatingElements.forEach(item => {
-                // Konumu güncelliyoruz
-                item.x += item.vx;
-                item.y += item.vy;
-                
-                // Ekran sınırlarına çarpma kontrolü (Sekme)
-                if (item.x <= 0) {
-                    item.x = 0;
-                    item.vx *= -1;
-                } else if (item.x + item.width >= window.innerWidth) {
-                    item.x = window.innerWidth - item.width;
-                    item.vx *= -1;
-                }
-                
-                if (item.y <= 0) {
-                    item.y = 0;
-                    item.vy *= -1;
-                } else if (item.y + item.height >= window.innerHeight) {
-                    item.y = window.innerHeight - item.height;
-                    item.vy *= -1;
-                }
-                
-                // Mouse imlecinden kaçma tepkisi
-                // Elementin merkezi
-                const centerX = item.x + item.width / 2;
-                const centerY = item.y + item.height / 2;
-                
-                // Mouse ile aradaki mesafe hesaplaması
-                const dx = centerX - mouseX;
-                const dy = centerY - mouseY;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-                
-                // Eğer mouse 150 pikselden daha yakınsa
-                if (dist < 150 && dist > 0) {
-                    // Mesafe ne kadar kısaysa itme gücü (force) o kadar artar
-                    const force = (150 - dist) / 150;
-                    const acceleration = force * 4; 
-                    
-                    item.vx += (dx / dist) * acceleration;
-                    item.vy += (dy / dist) * acceleration;
-                }
-                
-                // Hız limiti (Limit speed to prevent flying too fast)
-                const speed = Math.sqrt(item.vx * item.vx + item.vy * item.vy);
-                const maxSpeed = 7;
-                
-                if (speed > maxSpeed) {
-                    item.vx = (item.vx / speed) * maxSpeed;
-                    item.vy = (item.vy / speed) * maxSpeed;
-                } else if (speed > 1) {
-                    // Doğal yavaşlama (Sürtünme)
-                    item.vx *= 0.98;
-                    item.vy *= 0.98;
-                }
-                
-                // Yeni konumu uygula
-                item.element.style.transform = `translate(${item.x - parseFloat(item.element.style.left)}px, ${item.y - parseFloat(item.element.style.top)}px)`;
-            });
-            
-            // requestAnimationFrame ile akıcı süzülme
-            animationId = requestAnimationFrame(animateFloat);
-        }
+        loadProjects();
     </script>
+
 </body>
+
 </html>
