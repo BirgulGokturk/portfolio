@@ -29,12 +29,9 @@
     <meta name="twitter:description" content="Birgül Göktürk — yapay zeka ve makine öğrenimi odaklı yazılım mühendisi. Java, Python, RAG ve LLM tabanlı projeler; temiz kod ve ölçeklenebilir mimariler." />
     <meta name="twitter:image" content="https://birgulgokturk.com/og-image.png" />
 
-    <!-- Fontlar: render'i bloklamadan yuklenir -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" /></noscript>
+    <!-- Fontlar: kendi alan adimizdan, yalnizca kullanilan karakterlerle (bkz. tools/build-fonts.py) -->
+    <link rel="preload" as="font" type="font/woff2" href="fonts/poppins-400.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="fonts/poppins-600.woff2" crossorigin />
 
     <!-- Tailwind: CDN yerine derlenmis ve satir ici gomulmus CSS (build.mjs uretir) -->
     <!-- TW:START -->
@@ -42,6 +39,39 @@
     <!-- TW:END -->
 
     <style>
+        /* Poppins — OFL 1.1, bkz. fonts/OFL.txt */
+        @font-face {
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 400;
+            font-display: swap;
+            src: url('fonts/poppins-400.woff2') format('woff2');
+        }
+
+        @font-face {
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 500;
+            font-display: swap;
+            src: url('fonts/poppins-500.woff2') format('woff2');
+        }
+
+        @font-face {
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 600;
+            font-display: swap;
+            src: url('fonts/poppins-600.woff2') format('woff2');
+        }
+
+        @font-face {
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 700;
+            font-display: swap;
+            src: url('fonts/poppins-700.woff2') format('woff2');
+        }
+
         :root {
             --color-cream: #FCE4EC;     /* Clearer soft pink background */
             --color-sand: #F8BBD0;      /* Slightly darker pink for accents */
