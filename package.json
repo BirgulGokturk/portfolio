@@ -1,0 +1,12 @@
+{
+  "name": "birgulgokturk-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "birgulgokturk.com kisisel portfolyo sitesi",
+  "scripts": {
+    "build": "node build.mjs"
+  },
+  "devDependencies": {
+    "tailwindcss": "3.4.17"
+  }
+}
